@@ -10,26 +10,54 @@
 </head>
 <body>
 	<input type ="text" placeholder="隐含层数量" value="4">
-	<input type ="text"  placeholder="序列化数量" value="4">
+	<input id ="serialNum" type ="text"  placeholder="序列化数量" value="4">
 	测试序列化数量和隐含侧数量对结果准确性的影响
-	<input type ="text"  placeholder="隐含层最大数量" value="20">
-	<input type ="text" placeholder="序列化最大数量" value="20">
+	隐含层最大数量<input type ="text"  placeholder="隐含层最大数量" value="20">
+	序列化最大数量<input type ="text" id="maxSerialNum" placeholder="序列化最大数量" value="20">
 	<input type ="button" placeholder="准备数据" value="准备数据" id="prepareData">
+	<input type ="button" placeholder="分析网络参数" value="分析网络参数" id="analysisArgs">
 	<script>
 	$("#prepareData").click(function(){
 		$.ajax({
 	        type: "post",
 	        dataType: "json",
-	        url: "<%=request.getContextPath()%>/neural/prepareData",
-	        data:{id:${id},columnId:i},
+	        url: "<%=request.getContextPath()%>/neural/prepareData/RecurrentNN",
+	        data:{id:1,columnId:1},
 	        success : function(data) {
-	        	list[i].data=data.result;
+	        	console.log(data);
 	        },
 	        error: function(XMLHttpRequest, textStatus, errorThrown){
 	        	alert(textStatus);
 	        }
 		});
 	})
+	$("#analysisArgs").click(function(){
+		$("#barContainer").css({display:"block"});
+		var maxSerialNum = $("#maxSerialNum").val();
+		for(var i=4;i<=maxSerialNum;i++){
+			(function(i){
+				$.ajax({
+			        type: "post",
+			        dataType: "json",
+			        url: "<%=request.getContextPath()%>/neural/analysisArgs/RecurrentNN",
+			        data:{serialNum:4,maxhiddenNum:8},
+			        success : function(data) {
+			        	console.log(data);
+						$("#barContainer").css({display:"none"});
+			        },
+			        error: function(XMLHttpRequest, textStatus, errorThrown){
+			        	alert(textStatus);
+			        }
+				});
+				$("#barContainer").css({width:(i-3)/(maxSerialNum-3)+"%"})
+			})(i)
+		}
+	})
 	</script>
+	<div class="barContainer" id="barContainer" style="display:none"><div class="bar"></div></div>
+	<style>
+	.barContainer{height:50px; }
+	.bar{width:10%;background:#09f}
+	</style>
 </body>
 </html>

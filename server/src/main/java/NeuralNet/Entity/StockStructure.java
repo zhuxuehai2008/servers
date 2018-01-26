@@ -1,8 +1,9 @@
 package NeuralNet.Entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class StockStructure {
+public class StockStructure implements Serializable{
 	public ArrayList<double[]> list;
 	public ArrayList<String> date;
 	public int size;

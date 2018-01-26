@@ -1,6 +1,8 @@
 package NeuralNet;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -264,6 +266,79 @@ public class RecurrentNN extends TemplateNN{
 		double[] simulate = recurrentNN.simulate(trainDataSupervised);
 		System.out.println(JSONArray.fromObject(simulate));*/
 		//testbasic();
+	}
+	public static ArrayList<HashMap<String ,Number>> analysisArgs(int maxSerialNum,int maxhiddenNum,ArrayList<StockStructure> arrayList){
+		ArrayList<HashMap<String ,Number>> result = new ArrayList<HashMap<String ,Number>>();
+		double[] mean = new double[4];
+		int minserialNum =0;int minhiddenNum=0;;double var =100.0;
+		for(int serialNum=6;serialNum<=maxSerialNum;serialNum+=1){
+			ArrayList<double[]> templist = arrayList.get(0).list;
+			ArrayList<double[]> meanserial = new ArrayList<double[]>();
+			for(int m =templist.size()-serialNum-2;m<templist.size()-2;m++){
+				meanserial.add(templist.get(m));
+			}
+			mean = templist.get(templist.size()-1);
+			for(int hiddenNum=4;hiddenNum<=maxhiddenNum;hiddenNum+=1){
+				//ArrayList<Double> arrayList = new ArrayList<Double>();
+				double sum = 0.0;
+				for(int i = 0;i<100;i++){
+					double[] testStockList = testStockList(hiddenNum, serialNum,arrayList,meanserial);
+					double variance = variance(testStockList,mean);
+					sum+=variance;
+					//arrayList.add(variance);
+				}
+				if(var>sum/100.0){var=sum/100.0;minserialNum = hiddenNum;minserialNum = serialNum;}
+				HashMap<String, Number> map = new HashMap<String ,Number>();
+				map.put("serialNum",serialNum);
+				map.put("hiddenNum",hiddenNum);
+				map.put("value",sum/100.0);
+				result.add(map);
+				System.out.println("@:serialNum"+serialNum+"     hiddenNum:"+hiddenNum+"     var:"+sum/100.0);
+			}
+		}
+		System.out.println("@min:serialNum"+minserialNum+"     hiddenNum:"+minhiddenNum+"     var:"+var);
+		return result;
+	}
+	public static ArrayList<HashMap<String ,Number>> analysisHiddenNum(int serialNum,int maxhiddenNum,ArrayList<StockStructure> arrayList){
+		ArrayList<HashMap<String ,Number>> result = new ArrayList<HashMap<String ,Number>>();
+		double[] mean = new double[4];
+		int minserialNum =0;int minhiddenNum=0;;double var =100.0;
+			ArrayList<double[]> templist = arrayList.get(0).list;
+			ArrayList<double[]> meanserial = new ArrayList<double[]>();
+			for(int m =templist.size()-serialNum-2;m<templist.size()-2;m++){
+				meanserial.add(templist.get(m));
+			}
+			mean = templist.get(templist.size()-1);
+			for(int hiddenNum=4;hiddenNum<=maxhiddenNum;hiddenNum+=1){
+				//ArrayList<Double> arrayList = new ArrayList<Double>();
+				double sum = 0.0;
+				for(int i = 0;i<100;i++){
+					double[] testStockList = testStockList(hiddenNum, serialNum,arrayList,meanserial);
+					double variance = variance(testStockList,mean);
+					sum+=variance;
+					//arrayList.add(variance);
+				}
+				if(var>sum/100.0){var=sum/100.0;minserialNum = hiddenNum;minserialNum = serialNum;}
+				HashMap<String, Number> map = new HashMap<String ,Number>();
+				map.put("serialNum",serialNum);
+				map.put("hiddenNum",hiddenNum);
+				map.put("value",sum/100.0);
+				result.add(map);
+				System.out.println("@:serialNum"+serialNum+"     hiddenNum:"+hiddenNum+"     var:"+sum/100.0);
+			}
+		System.out.println("@min:serialNum"+minserialNum+"     hiddenNum:"+minhiddenNum+"     var:"+var);
+		return result;
+	}
+	public static ArrayList<StockStructure> getData(){
+		String[] arr = new String[]{"600106","300305","000039","002441","300005","300004","600362"};
+		double[] mean = new double[4];
+		int minserialNum =0;int minhiddenNum=0;;double var =100.0;
+		ArrayList<StockStructure> arrayList = new ArrayList<StockStructure>();
+		for(int i=0;i<arr.length;i++){
+			StockStructure list = Http.getDataFromEastMoney(arr[i]);
+			arrayList.add(list);
+		}
+		return arrayList;
 	}
 	public static double variance(double[] o,double[] mean){
 		double var = 0.0;
