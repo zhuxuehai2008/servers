@@ -135,6 +135,7 @@
 										form_chart.setOption(window.option);
 									}
 								}
+							  
 							  window.intervals = setInterval(interval,2000);
 		//$("#barContainer").css({display:"none"});
 	})
