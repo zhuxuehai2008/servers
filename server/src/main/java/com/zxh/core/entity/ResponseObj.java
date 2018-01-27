@@ -1,4 +1,4 @@
-package com.xjc.interfaceserver.core;
+package com.zxh.core.entity;
 
 import net.sf.json.JSONObject;
 

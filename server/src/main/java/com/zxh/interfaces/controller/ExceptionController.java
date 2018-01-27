@@ -1,4 +1,4 @@
-package com.xjc.interfaceserver.controller;
+package com.zxh.interfaces.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;

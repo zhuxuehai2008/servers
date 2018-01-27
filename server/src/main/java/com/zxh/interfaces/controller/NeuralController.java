@@ -1,4 +1,4 @@
-package com.xjc.interfaceserver.controller;
+package com.zxh.interfaces.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.xjc.interfaceserver.core.ResponseObj;
+import com.zxh.core.entity.ResponseObj;
 
 import NeuralNet.RecurrentNN;
 import NeuralNet.Entity.StockStructure;

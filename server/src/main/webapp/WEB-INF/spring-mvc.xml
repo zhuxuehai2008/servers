@@ -8,11 +8,10 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
 	<!-- 自动扫描且只扫描@Controller -->
-	<context:component-scan base-package="com.xjc.interfaceserver.controller" use-default-filters="true">
+	<context:component-scan base-package="com.zxh.interfaces" use-default-filters="true">
 <!-- 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/> -->
 	</context:component-scan>
-	
  	<mvc:annotation-driven/>
 	
 	<!-- 定义JSP文件的位置 --> 
@@ -20,10 +19,8 @@
 		<property name="prefix" value="/WEB-INF/views/"/>
 		<property name="suffix" value=".jsp"/>
 	</bean>
-
 	<!-- 容器默认的DefaultServletHandler处理 所有静态内容与无RequestMapping处理的URL-->	
 	<mvc:default-servlet-handler/>
-	
 	<!-- 定义无需Controller的url<->view直接映射 -->
 	<mvc:view-controller path="/" view-name="redirect:/index"/>
 	<!-- 配置拦截器 -->
@@ -32,8 +29,9 @@
         <!-- 匹配的是url路径， 如果不配置或/**,将拦截所有的Controller -->  
         	<mvc:mapping path="/**" />
         	<mvc:exclude-mapping path="/login"/>
-        	<bean id = "interceptor" class= "com.xjc.interfaceserver.controller.limitController"></bean>
+        	<bean id = "interceptor" class= "com.zxh.interfaces.controller.limitController"></bean>
         </mvc:interceptor>
      </mvc:interceptors>
-	
+         <!-- 1.配置jdbc文件 -->
+	 <import resource="classpath:spring-mybatis.xml"/>
 </beans>

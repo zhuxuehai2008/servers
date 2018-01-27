@@ -1,4 +1,4 @@
-package com.xjc.interfaceserver.entity;
+package com.zxh.interfaces.entity;
 
 public class TestEntity {
 	private String name;

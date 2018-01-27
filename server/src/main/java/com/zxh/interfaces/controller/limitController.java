@@ -1,4 +1,4 @@
-package com.xjc.interfaceserver.controller;
+package com.zxh.interfaces.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
