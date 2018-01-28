@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
 	<!-- 自动扫描且只扫描@Controller -->
-	<context:component-scan base-package="com.zxh.interfaces" use-default-filters="true">
+	<context:component-scan base-package="com.zxh.interfaces,com.zxh.core.component" use-default-filters="true">
 <!-- 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/> -->
 	</context:component-scan>
@@ -29,9 +29,15 @@
         <!-- 匹配的是url路径， 如果不配置或/**,将拦截所有的Controller -->  
         	<mvc:mapping path="/**" />
         	<mvc:exclude-mapping path="/login"/>
-        	<bean id = "interceptor" class= "com.zxh.interfaces.controller.limitController"></bean>
+        	<bean id = "interceptor" class= "com.zxh.core.interceptor.LoginInterceptor">
+        		<property name="limitDefinition" >
+        			<value>
+        			/neural/test = authc
+        			</value>
+        		</property>
+        	</bean>
         </mvc:interceptor>
      </mvc:interceptors>
          <!-- 1.配置jdbc文件 -->
-	 <import resource="classpath:spring-mybatis.xml"/>
+	 <!-- <import resource="classpath:spring-mybatis.xml"/> -->
 </beans>

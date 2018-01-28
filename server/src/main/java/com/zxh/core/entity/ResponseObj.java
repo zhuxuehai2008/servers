@@ -1,6 +1,6 @@
 package com.zxh.core.entity;
 
-import net.sf.json.JSONObject;
+import com.zxh.core.util.Constant;
 
 public class ResponseObj {
 	private Object result ;
@@ -33,6 +33,10 @@ public class ResponseObj {
 	public ResponseObj(Integer staus,String msg){
 		this.status = staus;
 		this.msg = msg;
+	}
+	public ResponseObj(Integer status){
+		this.status = status;
+		this.msg = Constant.getStatusMsg(status);
 	}
 
 	public Integer getStatus() {

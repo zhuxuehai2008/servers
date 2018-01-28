@@ -4,9 +4,9 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<package name="cn.sxt.vo"/>
+		<package name="com.zxh.interfaces.entity"/>
 	</typeAliases>
-	<mappers>
+<!-- 	<mappers>
 		<mapper resource="cn/sxt/mapper/UserMapper.xml"/>
-	</mappers>
+	</mappers> -->
 </configuration>

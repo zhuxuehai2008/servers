@@ -30,7 +30,7 @@
 		<property name="typeAliasesPackage" value="com.zxh.interfaces.entity"></property>
 		<property name="mapperLocations">
 			<list>
-				<!-- <value>classpath:com/zxh/mapper/UserMapper.xml</value> -->
+				<value>classpath:com/zxh/interfaces/mapper/NeuralMapper.xml</value>
 			</list>
 		</property>
 	</bean>
@@ -44,7 +44,7 @@
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<!-- <property name="sqlSessionFactory" ref="sqlSessionFactory"></property> -->
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
-		<property name="basePackage" value="ccom.zxh.interfaces.mapper"></property>
+		<property name="basePackage" value="com.zxh.interfaces.mapper"></property>
 	</bean>
     <!-- 事务管理器 -->
     <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -60,7 +60,7 @@
   		<tx:method name="update*" propagation="REQUIRED"/>
   		<tx:method name="find*" read-only="true"/>
   		<tx:method name="*" propagation="REQUIRED"/>
-  	</tx:attributes>
+  		</tx:attributes>
     </tx:advice>
     <aop:config>
 		<!-- expression  指明事务在哪里起作用
@@ -68,7 +68,6 @@
 		第二个* 表示所有类
 		第三个* 表示类中的所有方法
 		.. 表示所有参数 -->
-		 
 		<aop:pointcut expression="execution(* com.zxh.service.impl.*.*(..))" id="pointcut"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
 	</aop:config>
