@@ -34,6 +34,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		System.out.println(getLimitDefinition());
 		System.out.println(requestURI);
 		System.out.println("@!!!!!!!"+contextPath);
+		getLimitDefinitionMap(contextPath);
 		//request.getRequestDispatcher("WEB-INF/views/index.jsp").forward(request, response);
 		String parameter = request.getParameter("flag");
 		if(null!=parameter){response.sendRedirect(request.getContextPath()+"");return false;}
@@ -45,6 +46,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		return limitDefinition;
 	}
 	public HashMap<String,String> getLimitDefinitionMap(String contextPath){
+		String[] split = getLimitDefinition().split("\n");
+		HashMap<String,String> map = new HashMap<String,String>();
+		for(int i=0;i<split.length;i++){
+			if(split[i].trim()==null||split[i].indexOf("=")<0||split[i].trim().equals("")){continue;}
+			String[] arr = split[i].trim().split("=");
+			map.put(arr[0].trim(),arr[1].trim());
+		}
 		return null;
 	}
 	public void setLimitDefinition(String limitDefinition) {
