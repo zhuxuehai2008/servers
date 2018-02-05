@@ -3,6 +3,7 @@ package com.zxh.core.util;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class ResponseRender {
@@ -21,6 +22,11 @@ public class ResponseRender {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	public static boolean isAjax(HttpServletRequest request){
+		String str = request.getHeader("X-Requested-With");
+		if(str==null||str.equals("")){return false;}
+		return true;
 	}
 	public void send(){
 		try {
