@@ -20,7 +20,6 @@ public class AuthorizeInterceptor extends HandlerInterceptorAdapter{
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
-		System.out.println("completion");
 		super.afterCompletion(request, response, handler, ex);
 	}
 
@@ -36,7 +35,7 @@ public class AuthorizeInterceptor extends HandlerInterceptorAdapter{
 		String requestURI = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		HttpSession session = request.getSession();
-		session.setAttribute("backUrl", requestURI);
+		session.setAttribute("backURL", requestURI);
 		ArrayList<Pair<String,String>> limitDefinitionList = getLimitDefinitionMap(contextPath);
 		System.out.println(getLimitDefinition());
 		System.out.println(requestURI);
