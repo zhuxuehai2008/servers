@@ -8,8 +8,16 @@ import com.zxh.core.entity.ResponseObj;
 
 @Controller
 public class loginController {
-	@RequestMapping(value = "", method = RequestMethod.POST)
-	public ResponseObj login(){
+	@RequestMapping(value = "login/interface", method = RequestMethod.POST)
+	public ResponseObj loginInterface(){
 		return null;
+	}
+	@RequestMapping(value = "login", method = RequestMethod.GET)
+	public String loginPage(){
+		return "login";
+	}
+	@RequestMapping(value = "login", method = RequestMethod.POST)
+	public String loginSuccess(){
+		return "login";
 	}
 }
