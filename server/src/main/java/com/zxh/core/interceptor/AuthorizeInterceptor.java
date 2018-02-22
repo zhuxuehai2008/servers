@@ -1,7 +1,6 @@
 package com.zxh.core.interceptor;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.Cookie;
@@ -13,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.zxh.core.entity.Pair;
+import com.zxh.core.entity.User;
 import com.zxh.core.exception.GlobalException;
 
 public class AuthorizeInterceptor extends HandlerInterceptorAdapter{
@@ -52,7 +52,7 @@ public class AuthorizeInterceptor extends HandlerInterceptorAdapter{
 					
 					System.out.println("authc");
 				}else if(pair.value.equals("user")){
-					Object attribute = request.getSession().getAttribute("user");
+					User attribute = (User)request.getSession().getAttribute("user");
 					System.out.println("user");
 					if(null!=attribute){
 						return true;
