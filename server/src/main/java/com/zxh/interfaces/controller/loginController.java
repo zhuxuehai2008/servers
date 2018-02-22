@@ -23,7 +23,6 @@ public class loginController {
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public String loginSuccess(HttpServletRequest request,HttpServletResponse response,HttpSession session){
 		String backURL = (String)session.getAttribute("backURL");
-		request.get
 		return "login";
 	}
 }
