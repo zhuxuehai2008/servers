@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.zxh.core.entity.ResponseObj;
 import com.zxh.core.exception.GlobalException;
+import com.zxh.core.exception.LoginException;
 import com.zxh.core.util.Constant;
 
 import net.sf.json.JSONObject;
@@ -27,6 +28,8 @@ public class ExceptionGlobalResovler implements HandlerExceptionResolver{
 		if(ajax){
 			if(e instanceof GlobalException){
 				processAjaxException(response,new ResponseObj(Constant.StatusCommon,e.getMessage()));
+			}else if(e instanceof LoginException){
+				
 			}else{
 				processAjaxException(response, new ResponseObj(Constant.StatusErrorSystem));
 				e.printStackTrace();
@@ -35,6 +38,8 @@ public class ExceptionGlobalResovler implements HandlerExceptionResolver{
 			modelAndView = new ModelAndView("error");
 			if(e instanceof GlobalException){
 				modelAndView.addObject("msg", e.getMessage());
+			}else if(e instanceof LoginException){
+				modelAndView = new ModelAndView("login");
 			}else{
 				modelAndView.addObject("msg", Constant.getStatusMsg(Constant.StatusErrorSystem));
 				e.printStackTrace();
