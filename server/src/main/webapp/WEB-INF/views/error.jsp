@@ -8,5 +8,6 @@
 </head>
 <body>
 	welcome use career interface 2 error
+	${msg}
 </body>
 </html>
