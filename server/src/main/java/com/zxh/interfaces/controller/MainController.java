@@ -12,4 +12,8 @@ public class MainController {
 	public String error(){
 		return "error";
 	}
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	public String index(){
+		return "index";
+	}
 }
