@@ -17,6 +17,9 @@
       <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
             <property name="locations" value="classpath:application.properties"/>
       </bean>
+      <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">  
+         <constructor-arg index="0" ref="sqlSessionFactory"/>  
+      </bean>
       <!-- 配置jdbc -->
 	  <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	  	<property name="driverClassName" value="${jdbc.driver}"/>
@@ -30,7 +33,8 @@
 		<property name="typeAliasesPackage" value="com.zxh.interfaces.entity"></property>
 		<property name="mapperLocations">
 			<list>
-				<value>classpath:com/zxh/interfaces/mapper/NeuralMapper.xml</value>
+				<value>classpath:com/zxh/interfaces/mapper/*.xml</value>
+				<value>classpath:mapper/*.xml</value>
 			</list>
 		</property>
 	</bean>
@@ -62,13 +66,17 @@
   		<tx:method name="*" propagation="REQUIRED"/>
   		</tx:attributes>
     </tx:advice>
+	<bean id="mapperInterceptor" class="com.zxh.core.interceptor.MapperInterceptor" />
     <aop:config>
 		<!-- expression  指明事务在哪里起作用
 		第一个* 表示所有返回值 
 		第二个* 表示所有类
 		第三个* 表示类中的所有方法
 		.. 表示所有参数 -->
-		<aop:pointcut expression="execution(* com.zxh.service.impl.*.*(..))" id="pointcut"/>
+		<aop:pointcut expression="execution(* com.zxh.interfaces.service.impl.*.*(..))" id="pointcut"/>
+        <aop:pointcut id="insertPointCut" expression="execution(* com.zxh.interfaces.mapper..insert(..)))" />
+        <!-- <aop:pointcut id="datalogUpdatePointCut" expression="execution(* com.yami.infrastructure.repository.mapper..update*(..)) &amp;&amp; !execution(* com.yami.infrastructure.repository.mapper.ActionMapper.*(..))" /> -->
+        <!-- <aop:advisor advice-ref="mapperInterceptor" pointcut-ref="insertPointCut" /> -->
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
 	</aop:config>
 </beans>

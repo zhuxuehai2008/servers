@@ -13,7 +13,6 @@ body{height:100%;background:#16a085;overflow:hidden;}
 canvas{z-index:-1;position:absolute;}
 </style>
 <script src="<%=path %>/static/js/jquery.js"></script>
-<script src="<%=path %>/static/js/verificationNumbers.js"></script>
 <script src="<%=path %>/static/js/Particleground.js"></script>
 <script>
 $(document).ready(function() {
@@ -22,16 +21,17 @@ $(document).ready(function() {
     dotColor: '#5cbdaa',
     lineColor: '#5cbdaa'
   });
-  //验证码
-  createCode();
-  //测试提交，对接程序删除即可
-  $(".submit_btn").click(function(){
-	  location.href="index.html";
-	  });
 });
+	  function changeJCode(){
+	  $(".J_codeimg").attr("src","<%=path%>/servlet/randImage.cl?timestamp="+new Date().getTime());
+	  }
+	  function check(){
+		  return true;
+	  }
 </script>
 </head>
 <body>
+<form action="<%=path%>/login" method="post" onsubmit="return check();">
 <dl class="admin_login">
  <dt>
   <strong>站点后台管理系统</strong>
@@ -46,16 +46,17 @@ $(document).ready(function() {
  <dd class="val_icon">
   <div class="checkcode">
     <input type="text" id="J_codetext" placeholder="验证码" maxlength="4" class="login_txtbx">
-    <canvas class="J_codeimg" id="myCanvas" onclick="createCode()">对不起，您的浏览器不支持canvas，请下载最新版浏览器!</canvas>
+    <img class="J_codeimg" src="<%=path%>/servlet/randImage.cl?timestamp=<%=System.currentTimeMillis()%>">
   </div>
-  <input type="button" value="验证码核验" class="ver_btn" onClick="validate();">
+  <input type="button" value="更换验证码" class="ver_btn" onClick="changeJCode();">
  </dd>
  <dd>
-  <input type="button" value="立即登录" class="submit_btn"/>
+  <input type="submit" value="立即登录" class="submit_btn"/>
  </dd>
+ </form>
  <dd>
-  <p>© 2015-2016 DeathGhost 版权所有</p>
-  <p>陕B2-20080224-1</p>
+  <p>© 2018-2019 ZW 版权所有</p>
+  <p>吉B2-20080224-1</p>
  </dd>
 </dl>
 </body>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="base">
+
+    <insert id="create">
+        ${value}
+    </insert>
+	
+	<insert id="createRetuId"  useGeneratedKeys="true" keyProperty="id">
+		${value}
+	</insert>
+	
+	
+	<update id="modify">${value}</update>
+	
+    <delete id="detele">
+        ${value}
+    </delete>
+	
+	<select id="findOneById" resultType="hashmap">
+        ${value}
+    </select>
+    
+    <select id="find" resultType="hashmap">
+        ${value}
+    </select>
+	
+	<select id="findAllCount" resultType="Integer">
+        ${value}
+    </select>
+    
+    <select id="fetchSeqNextval" resultType="Long" flushCache="true">
+        ${value}
+    </select>
+	
+</mapper>
+

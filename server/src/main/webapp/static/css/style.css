@@ -320,7 +320,7 @@ weak {
 }
 
 .rmb_icon:before {
-    content: "￥";
+    content: "锟�;
     margin-right: 2px;
 }
 
@@ -457,7 +457,7 @@ weak {
 
 .admin_login dd .checkcode {
     float: left;
-    width: 182px;
+    width: 218px;
     height: 42px;
     background: #fff
 }
@@ -1275,4 +1275,9 @@ header .rt_nav li .quit_icon:before {
     width: 700px;
     height: 400px;
     margin-top: -15px
+}
+/*add by zxh*/
+.J_codeimg{
+	width: 87px;
+    height: 43px;
 }
