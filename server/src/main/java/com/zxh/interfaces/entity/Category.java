@@ -2,16 +2,21 @@ package com.zxh.interfaces.entity;
 
 import java.io.Serializable;
 
-import com.zxh.core.annotation.PrimaryKey;
-import com.zxh.core.annotation.Table;
-import com.zxh.core.annotation.TableColumn;
-@Table("category")
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Table(name = "category")
 public class Category implements Serializable{
-	@PrimaryKey("id")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer id;
 	public String name;
+	@Column(name = "parentId")
 	public Integer parentId;
-	@TableColumn("pic")
+	@Column(name = "pic")
 	public String picture;
 	public Integer level;
 	public Integer getId() {

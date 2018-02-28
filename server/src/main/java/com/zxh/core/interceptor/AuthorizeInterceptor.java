@@ -20,7 +20,7 @@ public class AuthorizeInterceptor extends HandlerInterceptorAdapter{
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
-		super.afterCompletion(request, response, handler, ex);   
+		super.afterCompletion(request, response, handler, ex);
 	}
 
 	@Override

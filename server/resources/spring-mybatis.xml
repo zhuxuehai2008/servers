@@ -45,7 +45,8 @@
 		该类将扫描指定的包 并且通过代理生成mapper接口的实现类 生成的类的id名称为
 		mapper接口首字母小写
 		 -->
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	<!-- <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"> -->
+	<bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
 		<!-- <property name="sqlSessionFactory" ref="sqlSessionFactory"></property> -->
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
 		<property name="basePackage" value="com.zxh.interfaces.mapper"></property>
@@ -66,7 +67,7 @@
   		<tx:method name="*" propagation="REQUIRED"/>
   		</tx:attributes>
     </tx:advice>
-	<bean id="mapperInterceptor" class="com.zxh.core.interceptor.MapperInterceptor" />
+	<!-- <bean id="mapperInterceptor" class="com.zxh.core.interceptor.MapperInterceptor" /> -->
     <aop:config>
 		<!-- expression  指明事务在哪里起作用
 		第一个* 表示所有返回值 

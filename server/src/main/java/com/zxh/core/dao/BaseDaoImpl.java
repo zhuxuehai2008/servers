@@ -62,8 +62,6 @@ public class BaseDaoImpl<T extends Serializable,PK extends Serializable> extends
 	public  BaseDaoImpl() {
 		
 		this.entityClass = (Class<T>) GenericsUtils.getSuperClassGenricType(this.getClass());
-		System.out.println(this.entityClass );
-		System.out.println(this.getClass());
 		columnFieldNamesMap = classFieldMap.get(entityClass);
         if (null == columnFieldNamesMap) {
         	columnFieldNamesMap = new LinkedHashMap<String, String>();
@@ -111,13 +109,12 @@ public class BaseDaoImpl<T extends Serializable,PK extends Serializable> extends
     }
 	
 	@Override
-	public T insert(T t) {
+	public int insert(T t) {
 		String sql_insert = sqlGenerator.sql_insert(t);
 		System.out.println(sql_insert);
 		System.out.println(entityClass.getName());
-		return t;
-		/*return getSqlSession().insert("base.create",
-				sql_insert );*/
+		return getSqlSession().insert("base.create",
+				sql_insert );
 	}
 	
 	@Override

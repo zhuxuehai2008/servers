@@ -20,8 +20,8 @@ public class CommodityController {
 		category.setName("asdsad");
 		category.setParentId(1);
 		category.setPicture("sdfsf");
-		Category insert = categoryService.insert(category);
-		System.out.println(insert);
+		int a  = categoryMapper.insert(category);
+		System.out.println("return :"+a);
 		return "commodity/categoryList";
 	}
 	@RequestMapping(value = "/categoryForm", method = RequestMethod.GET)
@@ -29,5 +29,5 @@ public class CommodityController {
 		return "commodity/categoryForm";
 	}
 	@Autowired private CategoryMapper categoryMapper;
-	@Autowired private CategoryService categoryService ;
+	/*@Autowired private CategoryService categoryService ;*/
 }

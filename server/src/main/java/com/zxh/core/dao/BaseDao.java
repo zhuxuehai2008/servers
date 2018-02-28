@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface BaseDao<T extends Serializable,PK extends Serializable> {
 
-	public T insert(T t);
+	public int insert(T t);
 	
 	public int update(T t);
 	

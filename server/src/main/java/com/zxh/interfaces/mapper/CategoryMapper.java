@@ -4,5 +4,7 @@ import java.util.HashMap;
 
 import com.zxh.interfaces.entity.Category;
 
-public interface CategoryMapper extends BaseMapper<Category,Integer>{
+import tk.mybatis.mapper.common.Mapper;
+
+public interface CategoryMapper extends Mapper<Category>{
 }

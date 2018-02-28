@@ -10,7 +10,7 @@ public abstract class BaseService<M extends Serializable,K extends Serializable>
     @Autowired  
     protected BaseDao<M,K> baseDao;  
   
-    public M insert(M m) {  
+    public int insert(M m) {  
     	
     	return baseDao.insert(m);  
     }  

@@ -1,2 +1,3 @@
 
 server/target/classes/application.properties
+server/resources/application.properties
