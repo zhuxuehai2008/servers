@@ -1,2 +1,15 @@
 ﻿/server/target
 /server/workspace
+server/target/classes/application.properties
+server/target/classes/application.properties
+server/target/classes/NeuralNet/dataSource/Http.class
+server/target/classes/NeuralNet/Entity/StockStructure.class
+server/target/classes/NeuralNet/Neuron.class
+server/target/classes/NeuralNet/RecurrentNN.class
+server/target/classes/NeuralNet/TansferFunction/MethodEntity.class
+server/target/classes/application.properties
+server/target/classes/NeuralNet/dataSource/Http.class
+server/target/classes/NeuralNet/dataSource/Http.class
+server/target/classes/NeuralNet/dataSource/Http.class
+server/target/classes/NeuralNet/dataSource/Http.class
+server/target/classes/NeuralNet/Entity/StockStructure.class
