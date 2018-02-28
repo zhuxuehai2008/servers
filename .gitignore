@@ -13,3 +13,4 @@ server/target/classes/NeuralNet/dataSource/Http.class
 server/target/classes/NeuralNet/dataSource/Http.class
 server/target/classes/NeuralNet/dataSource/Http.class
 server/target/classes/NeuralNet/Entity/StockStructure.class
+server/target/classes/application.properties
