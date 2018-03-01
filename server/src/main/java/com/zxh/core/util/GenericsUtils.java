@@ -36,7 +36,6 @@ public class GenericsUtils {
         Type genType = clazz.getGenericSuperclass();
         /* 判断是否继承自此类 */
         if (!(genType instanceof ParameterizedType)) {
-        	System.out.println("a");
             return Object.class;
         }
 
@@ -44,12 +43,10 @@ public class GenericsUtils {
         System.out.println(params.length);
         /* 判断传的参数：index 是否合法 */
         if (index >= params.length || index < 0) {
-        	System.out.println("ab");
             return Object.class;
         }
         /* 判断是否是真正的类型，因为可能是 泛化类型 T */
         if (!(params[index] instanceof Class<?>)) {
-        	System.out.println("abc");
             return Object.class;
         }
         return (Class<?>) params[index];

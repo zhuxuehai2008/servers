@@ -11,7 +11,7 @@
 <!--[if lt IE 9]>
 <script src="js/html5.js"></script>
 <![endif]-->
-<script src="<%=path %>/static/js/jquery.js"></script>
+<script src="<%=path %>/static/js/jquery-1.9.1.min.js"></script>
 <script src="<%=path %>/static/js/jquery.mCustomScrollbar.concat.min.js"></script>
 <script>
 
@@ -53,9 +53,10 @@
       </div>
      <section>
          <p>分类就是首页 - 页面内部（非底部导航）显示的导航栏内的内容</p>
-      <ul class="ulColumn2">
-          <li>
+      <ul class="ulColumn2 flex-column" id="form">
+        <li>
         <span class="item_name" style="width:120px;">所选大类：</span>
+        <input type="hidden" name="parentId" class="textbox textbox_295"/>
        <select>
         <option>药品</option>  
         <option>保健品</option>  
@@ -64,26 +65,91 @@
        </li>
        <li>
         <span class="item_name" style="width:120px;">分类名称：</span>
-        <input type="text" class="textbox textbox_295" placeholder="商品名称..."/>
+        <input type="text" name="name" class="textbox textbox_295" placeholder="商品名称..."/>
         <span class="errorTips">不要超过4字</span>
        </li>
        
        <li>
+        <span class="item_name" style="width:120px;">是否是末端节点：</span>
+        <input type="checkbox" name="isEnd" >
+       </li>
+       <li>
+       <form action="<%=path %>/servlet/imageUpload" method = "post" id="uploadFile" enctype="multipart/form-data">
         <span class="item_name" style="width:120px;">上传图片：</span>
         <label class="uploadImg">
-         <input type="file"/>
+         <input type="file" name="file" onchange="uploadPic()"/>
          <span>上传图片</span>
         </label>
+        </form>
        </li>
-       
+       <li>
+        <span class="item_name" style="width:120px;">已上传：</span>
+        <label class="uploadImg">
+        	<input type="hidden" name="picture" id="picture">
+       		<img src="" id="showImage">
+        </label>
+       </li>
        <li>
         <span class="item_name" style="width:120px;"></span>
-        <input type="submit" class="link_btn"/>
+        <input type="submit" class="link_btn" onclick="submit()"/>
        </li>
       </ul>
      </section>
+     
  </div>
 </section>
+<script>
+function uploadPic() { 
+	  var form = document.getElementById('uploadFile'), 
+	    formData = new FormData(form); 
+	  console.log(formData);
+	  $.ajax({ 
+	   url:"<%=path %>/servlet/imageUpload", 
+	   type:"post", 
+	   data:formData, 
+	   processData:false, 
+	   contentType:false/* "multipart/form-data;boundary="+new Date().getTime() */, 
+	   success:function(res){ 
+	    if(res){ 
+	     alert("上传成功！"); 
+	    } 
+	    $('#showImage').attr("src","<%=path%>"+res);
+	    $("#picture").val(res);
+	    console.log(res); 
+	   }, 
+	   error:function(err){ 
+	    alert("网络连接失败,稍后重试",err); 
+	   } 
+	  }) 
+	 } 
+function submit(){
+	var data={
+	 id:$("#form input[name=id]").val(),
+	 name:$("#form input[name=name]").val(),
+	 parentId:$("#form input[name=parentId]").val(),
+	 picture : $("#form input[name=picture]").val(),
+	 isEnd : $("#form input[name=isEnd]").is(":checked")?1:0
+	};
+	console.log(data);
+	 $.ajax({ 
+		   url:"<%=path %>/commodity/categoryForm", 
+		   type:"post", 
+		   processData:true,
+		   //contentType:"application/json;charset=UTF-8",
+		   data:data, 
+		   dataType:"json",
+		   success:function(res){ 
+			   alert(res.msg);
+			   if(res.status==200){
+				   //location.href = "<%=path%>/commodity/categoryList";
+			   }
+		   }, 
+		   error:function(err){ 
+		    alert("网络连接失败,稍后重试",err); 
+		   } 
+	}) 
+}
+</script>
 <script src="<%=path %>/static/js/ueditor.config.js"></script>
 <script src="<%=path %>/static/js/ueditor.all.min.js"> </script>
 <script type="text/javascript">

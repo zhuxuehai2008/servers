@@ -20,6 +20,10 @@ public class loginController {
 	public String loginPage(){
 		return "login";
 	}
+	@RequestMapping(value = "loginOut", method = RequestMethod.GET)
+	public String loginOut(){
+		return "login";
+	}
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public String loginSuccess(HttpServletRequest request,HttpServletResponse response,HttpSession session){
 		String backURL = (String)session.getAttribute("backURL");

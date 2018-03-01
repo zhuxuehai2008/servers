@@ -111,8 +111,6 @@ public class BaseDaoImpl<T extends Serializable,PK extends Serializable> extends
 	@Override
 	public int insert(T t) {
 		String sql_insert = sqlGenerator.sql_insert(t);
-		System.out.println(sql_insert);
-		System.out.println(entityClass.getName());
 		return getSqlSession().insert("base.create",
 				sql_insert );
 	}

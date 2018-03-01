@@ -55,6 +55,11 @@ th {
     padding: 0
 }
 
+.flex-column{
+	display: flex;
+    flex-flow: column;	
+}
+
 img {
     vertical-align: middle;
     border: 0

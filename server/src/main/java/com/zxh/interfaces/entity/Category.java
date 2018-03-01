@@ -19,6 +19,8 @@ public class Category implements Serializable{
 	@Column(name = "pic")
 	public String picture;
 	public Integer level;
+	@Column(name = "isEnd")
+	public Integer isEnd;
 	public Integer getId() {
 		return id;
 	}
@@ -48,6 +50,12 @@ public class Category implements Serializable{
 	}
 	public void setLevel(Integer level) {
 		this.level = level;
+	}
+	public Integer getIsEnd() {
+		return isEnd;
+	}
+	public void setIsEnd(Integer isEnd) {
+		this.isEnd = isEnd;
 	}
 	@Override
 	public String toString() {
