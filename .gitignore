@@ -1,6 +1,5 @@
-﻿/server/target
+﻿/server/target   
 /server/workspace
-server/target/classes/application.properties
 server/target/classes/application.properties
 server/target/classes/NeuralNet/dataSource/Http.class
 server/target/classes/NeuralNet/Entity/StockStructure.class
@@ -13,4 +12,4 @@ server/target/classes/NeuralNet/dataSource/Http.class
 server/target/classes/NeuralNet/dataSource/Http.class
 server/target/classes/NeuralNet/dataSource/Http.class
 server/target/classes/NeuralNet/Entity/StockStructure.class
-server/target/classes/application.properties
+
