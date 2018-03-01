@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <aside class="lt_aside_nav content mCustomScrollbar">
- <h2><a href="index.html">起始页</a></h2>
  <ul>
      <li>
    <dl>
-    <dt>首页信息管理11</dt>
+    <dt>首页信息管理</dt>
     <!--当前链接则添加class:active-->
     <dd><a href="index_swiper.html">首页轮播图管理</a></dd>
        <dd><a href="hot_productlist.html">热销商品管理</a></dd>
@@ -15,7 +14,7 @@
    <dl>
     <dt>商品信息管理</dt>
     <!--当前链接则添加class:active-->
-    <dd><a href="type_list.html" class="active">分类管理</a></dd>
+    <dd><a href="<%=request.getContextPath() %>/commodity/categoryList" class="active">分类管理</a></dd>
        <dd><a href="type_list.html">品牌管理</a></dd>
     <dd><a href="product_list.html">药品管理</a></dd>
     

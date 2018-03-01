@@ -1,5 +1,6 @@
 ﻿/server/target   
 /server/workspace
+server/resources/application.properties
 server/target/classes/application.properties
 server/target/classes/NeuralNet/dataSource/Http.class
 server/target/classes/NeuralNet/Entity/StockStructure.class

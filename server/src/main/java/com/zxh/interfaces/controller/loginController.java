@@ -12,7 +12,7 @@ import com.zxh.core.entity.ResponseObj;
 
 @Controller
 public class loginController {
-	@RequestMapping(value = "login/interface", method = RequestMethod.POST)
+	@RequestMapping(value = "interface/login", method = RequestMethod.POST)
 	public ResponseObj loginInterface(){
 		return null;
 	}
@@ -23,6 +23,6 @@ public class loginController {
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public String loginSuccess(HttpServletRequest request,HttpServletResponse response,HttpSession session){
 		String backURL = (String)session.getAttribute("backURL");
-		return "login";
+		return "index";
 	}
 }

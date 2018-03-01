@@ -37,9 +37,7 @@ public class AuthorizeInterceptor extends HandlerInterceptorAdapter{
 		HttpSession session = request.getSession();
 		session.setAttribute("backURL", requestURI);
 		ArrayList<Pair<String,String>> limitDefinitionList = getLimitDefinitionMap(contextPath);
-		System.out.println(getLimitDefinition());
 		System.out.println(requestURI);
-		System.out.println("@!!!!!!!"+contextPath);
 		System.out.println(limitDefinitionList);
 		boolean isMatch = false;
 		Pair<String, String> pair = null;
