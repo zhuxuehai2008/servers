@@ -39,7 +39,7 @@
 </head>
 <body>
 <!-- header -->
-<%@include file="component/header.jsp"%>
+<%@include file="../component/header.jsp"%>
 <!--header-->
 <!--aside nav-->
 <!--aside nav-->

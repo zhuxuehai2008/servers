@@ -1,5 +1,6 @@
 package com.zxh.interfaces.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,12 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.zxh.core.entity.ResponseObj;
 import com.zxh.core.util.Constant;
@@ -46,7 +46,15 @@ public class CommodityController {
 		String pageSize = request.getParameter("pageSize");
 		List<Category> selectPage = categoryService.selectPage(Integer.valueOf(pageBegin),Integer.valueOf(pageSize));
 		model.addAttribute("list", selectPage);
-		return new ResponseObj(JSONArray.fromObject(selectPage));
+		return new ResponseObj(selectPage);
+	}
+	@RequestMapping(value = "/categoryChildren", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseObj CategoryChildren(HttpServletRequest request,HttpServletResponse response,ModelMap model,@RequestParam Integer id){
+		List<HashMap<String,String>>  result= categoryService.categoryChildren(id);
+		System.out.println(result);
+		ResponseObj responseObj = new ResponseObj(result);
+		return responseObj;
 	}
 	@RequestMapping(value = "/categoryForm", method = RequestMethod.POST)
 	@ResponseBody

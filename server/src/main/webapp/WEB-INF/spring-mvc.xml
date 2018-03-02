@@ -41,6 +41,24 @@
         	</bean>
         </mvc:interceptor>
      </mvc:interceptors>
+     <bean id="stringConverter"  
+        class="org.springframework.http.converter.StringHttpMessageConverter"> 
+        <property name="writeAcceptCharset" value="false" /> 
+        <property name="supportedMediaTypes">  
+            <list>  
+                <value>text/plain;charset=UTF-8</value>  
+            </list>  
+        </property>  
+    </bean> 
+    <bean id="jsonConverter"  class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean> 
+    <bean  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">  
+        <property name="messageConverters">  
+            <list>  
+                <ref bean="stringConverter" />  
+                <ref bean="jsonConverter" />  
+            </list>  
+        </property> 
+    </bean>
          <!-- 1.配置jdbc文件 -->
 	 <!-- <import resource="classpath:spring-mybatis.xml"/> -->
 </beans>

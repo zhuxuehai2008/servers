@@ -14,3 +14,6 @@ server/target/classes/NeuralNet/dataSource/Http.class
 server/target/classes/NeuralNet/dataSource/Http.class
 server/target/classes/NeuralNet/Entity/StockStructure.class
 
+server/target/m2e-wtp/web-resources/META-INF/maven/com.xjc.interface/server/pom.xml
+server/target/m2e-wtp/web-resources/META-INF/maven/com.xjc.interface/server/pom.properties
+server/target/m2e-wtp/web-resources/META-INF/maven/com.xjc.interface/server/pom.properties

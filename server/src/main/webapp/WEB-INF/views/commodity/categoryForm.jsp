@@ -8,11 +8,25 @@
 <title>后台管理系统</title>
 <meta name="author" content="DeathGhost" />
 <link rel="stylesheet" type="text/css" href="<%=path %>/static/css/style.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/static/js/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css" />
+<style>
+ul .ztree{
+	margin-top: 10px;
+    border: 1px solid #617775;
+    background: #f0f6e4;
+    width: 220px;
+    height: 160px;
+    overflow-y: scroll;
+    overflow-x: auto;
+   }
+
+</style>
 <!--[if lt IE 9]>
 <script src="js/html5.js"></script>
 <![endif]-->
 <script src="<%=path %>/static/js/jquery-1.9.1.min.js"></script>
 <script src="<%=path %>/static/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script type="text/javascript" src="<%=path%>/static/js/ztree/js/jquery.ztree.all.js"></script>	
 <script>
 
 	(function($){
@@ -54,14 +68,15 @@
      <section>
          <p>分类就是首页 - 页面内部（非底部导航）显示的导航栏内的内容</p>
       <ul class="ulColumn2 flex-column" id="form">
-        <li>
-        <span class="item_name" style="width:120px;">所选大类：</span>
-        <input type="hidden" name="parentId" class="textbox textbox_295"/>
-       <select>
-        <option>药品</option>  
-        <option>保健品</option>  
-       </select>
-        <span class="errorTips">注意所选大类，以保证添加分类正确    </span>
+       <li>
+	        <input id = "parentId" name="parentId" type="hidden" value="0">
+	        <span class="item_name" style="width:120px;">所属分类：</span>
+	        <input type="text" readonly name="parentName" id="parentName" class="textbox textbox_295" value="分类"/>
+			<div tabindex="0" id="treeContent" class="treeContent" style="display:none; position:fixed;z-index:1000;" >
+			   <ul id="treeDemo" class="ztree" style="margin-top:0; width:170px; height: 200px;"></ul>
+			</div>
+			<input readonly class="link_btn" type="button" value="选择类别" onclick="showMenu()">
+        	<span class="errorTips" >注意所选大类，以保证添加分类正确    </span>
        </li>
        <li>
         <span class="item_name" style="width:120px;">分类名称：</span>
@@ -77,10 +92,12 @@
        <form action="<%=path %>/servlet/imageUpload" method = "post" id="uploadFile" enctype="multipart/form-data">
         <span class="item_name" style="width:120px;">上传图片：</span>
         <label class="uploadImg">
-         <input type="file" name="file" onchange="uploadPic()"/>
+         <input type="file" name="file"  onchange="uploadPic()"/>
+         <!-- onchange="uploadPic()" -->
          <span>上传图片</span>
         </label>
         </form>
+         <input type="submit" value="sk">
        </li>
        <li>
         <span class="item_name" style="width:120px;">已上传：</span>
@@ -95,20 +112,19 @@
        </li>
       </ul>
      </section>
-     
  </div>
 </section>
 <script>
 function uploadPic() { 
 	  var form = document.getElementById('uploadFile'), 
-	    formData = new FormData(form); 
-	  console.log(formData);
+	  formData = new FormData(form); 
 	  $.ajax({ 
 	   url:"<%=path %>/servlet/imageUpload", 
 	   type:"post", 
 	   data:formData, 
 	   processData:false, 
-	   contentType:false/* "multipart/form-data;boundary="+new Date().getTime() */, 
+	   cache: false,
+	   contentType:false,
 	   success:function(res){ 
 	    if(res){ 
 	     alert("上传成功！"); 
@@ -130,12 +146,10 @@ function submit(){
 	 picture : $("#form input[name=picture]").val(),
 	 isEnd : $("#form input[name=isEnd]").is(":checked")?1:0
 	};
-	console.log(data);
 	 $.ajax({ 
 		   url:"<%=path %>/commodity/categoryForm", 
 		   type:"post", 
 		   processData:true,
-		   //contentType:"application/json;charset=UTF-8",
 		   data:data, 
 		   dataType:"json",
 		   success:function(res){ 
@@ -149,10 +163,83 @@ function submit(){
 		   } 
 	}) 
 }
+var zNodes =[{name:"分类", id:"0",pid:"-1",isParent:true,nocheck:false}];
+
+var setting = {
+		async: {
+			enable: true,
+			url:"<%=path%>/commodity/categoryChildren",
+			autoParam:["id", "name=n", "level=lv"],
+			dataFilter: filter
+		},
+		view: {
+			selectedMulti: false,
+			dblClickExpand: false
+		},
+		check: {
+			enable: true,
+			chkStyle: "radio",
+			radioType: "all"
+		},
+		data: {
+			simpleData: {
+				enable: true
+			}
+		},
+		callback: {
+			onCheck: onCheck
+		}
+	};
+
+	function filter(treeId, parentNode, childNodes) {
+		if(childNodes.status!=200){return null}
+		childNodes = childNodes.result;
+		if (!childNodes) return null;
+		for (var i=0, l=childNodes.length; i<l; i++) {
+			childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+			if(childNodes[i].isEnd==0){
+				childNodes[i].isParent=true;
+			}else{
+				childNodes[i].isParent=false;
+				childNodes[i].chkDisabled=true;
+			}
+		}
+		return childNodes;
+	}
+	function showMenu() {
+		var cityObj = $("#parentName");
+		var cityOffset = $("#parentName").offset();
+		$("#treeContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
+		$("body").bind("mousedown", onBodyDown);
+	}
+	function hideMenu(dom,a){
+		$("#treeContent").fadeOut("fast");
+	}
+	function onBodyDown(event) {
+			if (!(event.target.id == "menuBtn" || event.target.id == "parentName" || event.target.id == "treeContent" || $(event.target).parents("#treeContent").length>0)) {
+				hideMenu();
+			}
+	}
+	function onCheck(e, treeId, treeNode) {
+		var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+		nodes = zTree.getCheckedNodes(true),
+		v = "";
+	     m = "";
+		for (var i=0, l=nodes.length; i<l; i++) {
+			
+			v = nodes[i].name ;
+			m = nodes[i].id ;
+		}
+		$("#parentName").attr("value", v);
+		$("#parentId").val(m);
+	}
+ 	$(document).ready(function(){
+		$.fn.zTree.init($("#treeDemo"), setting,zNodes);
+	});
 </script>
-<script src="<%=path %>/static/js/ueditor.config.js"></script>
-<script src="<%=path %>/static/js/ueditor.all.min.js"> </script>
-<script type="text/javascript">
+<%-- <script src="<%=path %>/static/js/ueditor.config.js"></script>
+<script src="<%=path %>/static/js/ueditor.all.min.js"> </script> --%>
+<!-- <script type="text/javascript">
 
     //实例化编辑器
     //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
@@ -264,6 +351,6 @@ function submit(){
         UE.getEditor('editor').execCommand( "clearlocaldata" );
         alert("已清空草稿箱")
     }
-</script>
+</script> -->
 </body>
 </html>
