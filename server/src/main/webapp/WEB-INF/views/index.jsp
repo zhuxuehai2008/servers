@@ -38,16 +38,7 @@
 </script>
 </head>
 <body>
-<!--header-->
-<header>
- <h1><img src="<%=path %>/static/images/admin_logo.png"/></h1>
- <ul class="rt_nav">
-           
-            <li><a href="#" class="admin_icon">DeathGhost</a></li>
-           
-            <li><a href="login.html" class="quit_icon">安全退出</a></li>
-        </ul>
-</header>
+<%@include file="component/header.jsp"%>
 <%@include file="component/menuLeft.jsp"%>
 <!--aside nav-->
 <!--aside nav-->

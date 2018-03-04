@@ -29,7 +29,8 @@ public class ExceptionGlobalResovler implements HandlerExceptionResolver{
 			if(e instanceof GlobalException){
 				processAjaxException(response,new ResponseObj(Constant.StatusCommon,e.getMessage()));
 			}else if(e instanceof LoginException){
-				
+			}else if(e instanceof NumberFormatException){
+				processAjaxException(response,new ResponseObj(Constant.StatusErrorNumber,Constant.getStatusMsg(Constant.StatusErrorNumber)));
 			}else{
 				processAjaxException(response, new ResponseObj(Constant.StatusErrorSystem));
 				e.printStackTrace();
@@ -40,6 +41,8 @@ public class ExceptionGlobalResovler implements HandlerExceptionResolver{
 				modelAndView.addObject("msg", e.getMessage());
 			}else if(e instanceof LoginException){
 				modelAndView = new ModelAndView("login");
+			}else if(e instanceof NumberFormatException){
+				modelAndView.addObject("msg", Constant.getStatusMsg(Constant.StatusErrorNumber));
 			}else{
 				modelAndView.addObject("msg", Constant.getStatusMsg(Constant.StatusErrorSystem));
 				e.printStackTrace();

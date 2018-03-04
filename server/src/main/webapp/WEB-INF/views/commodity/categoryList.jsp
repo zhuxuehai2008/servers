@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <% String path = request.getContextPath();%>
 <html>
@@ -11,7 +12,8 @@
     <!--[if lt IE 9]>
 <script src="js/html5.js"></script>
 <![endif]-->
-    <script src="<%=path %>/static/js/jquery.js"></script>
+    <script src="<%=path %>/static/js/jquery-1.9.1.min.js"></script>
+    <script src="<%=path %>/static/js/component/jquery.page.js"></script>
     <script src="<%=path %>/static/js/jquery.mCustomScrollbar.concat.min.js"></script>
     <script>
         (function($) {
@@ -35,6 +37,56 @@
             });
         })(jQuery);
     </script>
+    <script>
+    var pageSetting= {
+    	url:"<%=path%>/commodity/categoryPage",
+    	success:function(data){
+    		console.log(data);	
+			var l = data.list;
+			showList(l);
+    	}
+    }
+    function showList(l){
+	    	for(var i=0;i<l.length;i++){
+	    		$("#pageTarget").append("<tr><td class='center'>"+l[i].name+"</td><td><img src='<%=path%>"+l[i].pic+"'></td><td class='center'>"+(l[i].isEnd==1?"末端":"父节点")+"</td><td class='center'><a href='<%=path %>/commodity/categoryForm?id="+l[i].id+"' title='编辑' class='link_icon' target='_blank'>&#118;</a><a onclick='del("+l[i].id+")' title='删除' class='link_icon'>&#100;</a></td>");
+	    	}
+    }
+    function search(){
+	   	 $.ajax({ 
+			   url:"<%=path %>/commodity/categorySearch", 
+			   type:"post", 
+			   data:{key:$("#searchKey").val()}, 
+			   dataType:"json",
+			   success:function(res){ 
+				   if(res.status==200){
+					   $("#pageTarget").html("");
+					   showList(res.result)
+				   }else{
+					   alert(res.msg)
+				   }
+			   }, 
+			   error:function(err){ 
+			    alert("网络连接失败,稍后重试",err); 
+			   } 
+		})
+    }
+    function del(id){
+	   	 $.ajax({ 
+			   url:"<%=path %>/commodity/categoryDelete", 
+			   type:"post", 
+			   data:{id:id}, 
+			   dataType:"json",
+			   success:function(res){ 
+					   alert(res.msg);
+					   $.page(0,pageSetting);
+			   }, 
+			   error:function(err){ 
+			    alert("网络连接失败,稍后重试",err); 
+			   } 
+		})
+    }
+    $(function(){$.page(0,pageSetting);})
+    </script>
 </head>
 
 <body>
@@ -51,49 +103,58 @@
                 <a class="fr top_rt_btn add_icon" href="<%=path %>/commodity/categoryForm">添加分类</a>
             </div>
             <section class="mtb">
-                <span>选择大类</span>
-                <select class="select">
-        <option>药品</option>
-        <option>保健品</option>
-       </select>
-
-                <input type="button" value="查询" class="group_btn" />
+                <span>关键字</span>
+				<input type="text" id="searchKey"placeholder="查询关键字">
+                <input type="button" value="查询" class="group_btn" onclick="search()"/>
             </section>
             <table class="table">
-                <tr>
-                    <th>分类名称</th>
-                    <th>分类图片</th>
-
-                    <th>操作</th>
-                </tr>
-                <tr>
-                    <td class="center">美容养颜</td>
-                    <td class="center">
-                        <img src="<%=path %>/static/images/index_navico/1.png" width="50" height="50">
-                    </td>
-
-                    <td class="center">
-                        <a href="<%=path %>/static/type_detail.html" title="编辑" class="link_icon" target="_blank">&#118;</a>
-                        <a href="#" title="删除" class="link_icon">&#100;</a>
-                    </td>
-                </tr>
-
+           		 <thead>
+	                <tr>
+	                    <th>分类名称</th>
+	                    <th>分类图片</th>
+	                    <th>是否末端</th>
+	                    <th>操作</th>
+	                </tr>
+                </thead>
+                <tbody id="pageTarget">
+	                <tr>
+	                    <td class="center">美容养颜</td>
+	                    <td class="center">
+	                        <img src="<%=path %>/static/images/index_navico/1.png" width="50" height="50">
+	                    </td>
+	
+	                    <td class="center">
+	                        <a href="<%=path %>/commodity/categoryUpdate" title="编辑" class="link_icon" target="_blank">&#118;</a>
+	                        <a href="#" title="删除" class="link_icon">&#100;</a>
+	                    </td>
+	                </tr>
+				</tbody>
             </table>
-            <aside class="paging">
-                <a>第一页</a>
-                <a>1</a>
-                <a>2</a>
-                <a>3</a>
-                <a>…</a>
-                <a>1004</a>
-                <a>最后一页</a>
-            </aside>
+            <div id ="page" class="pagestir"></div>
         </div>
     </section>
-    <script src="<%=path %>/static/js/ueditor.config.js"></script>
+    <style>
+    	.pageButton {
+		    float: left;
+		    border: #ddd 1px solid;
+		    cursor: pointer;
+		    padding: 4px 15px;
+		    border-right: none;
+		}
+		div#page {
+		    float: right;
+		    margin-top: 20px;
+		}
+		wlht_styles.css:359
+		.pagestir {
+		    float: right;
+		    margin-right: 50px;
+		}
+		    </style>
+    <%-- <script src="<%=path %>/static/js/ueditor.config.js"></script>
     <script src="<%=path %>/static/js/ueditor.all.min.js">
-    </script>
-    <script type="text/javascript">
+    </script> --%>
+    <!-- <script type="text/javascript">
         //实例化编辑器
         //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
         var ue = UE.getEditor('editor');
@@ -217,7 +278,7 @@
             UE.getEditor('editor').execCommand("clearlocaldata");
             alert("已清空草稿箱")
         }
-    </script>
+    </script> -->
 </body>
 
 </html>

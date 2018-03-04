@@ -14,8 +14,8 @@
    <dl>
     <dt>商品信息管理</dt>
     <!--当前链接则添加class:active-->
-    <dd><a href="<%=request.getContextPath() %>/commodity/categoryList" class="active">分类管理</a></dd>
-       <dd><a href="type_list.html">品牌管理</a></dd>
+    <dd><a href="<%=request.getContextPath() %>/commodity/categoryList" <%-- class="active" --%>>分类管理</a></dd>
+       <dd><a href="<%=request.getContextPath() %>/commodity/brandList">品牌管理</a></dd>
     <dd><a href="product_list.html">药品管理</a></dd>
     
    </dl>

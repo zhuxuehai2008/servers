@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zxh.interfaces.mapper.BrandMapper">
+	<select id="selectPage" resultType="Brand">
+		select * from brand limit #{pageBegin} , #{pageSize}
+	</select>
+	<select id="countAll" resultType="Integer">
+	select count(*) from brand
+	</select>
+	<select id="selectLikeName" resultType="Brand">
+	select * from brand where name like "%"#{key}"%"
+	</select>
+</mapper>

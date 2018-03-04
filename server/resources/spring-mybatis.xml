@@ -74,7 +74,7 @@
 		第二个* 表示所有类
 		第三个* 表示类中的所有方法
 		.. 表示所有参数 -->
-		<aop:pointcut expression="execution(* com.zxh.interfaces.service.impl.*.*(..))" id="pointcut"/>
+		<aop:pointcut expression="execution(* com.zxh.interfaces.service.*.*(..))" id="pointcut"/>
         <aop:pointcut id="insertPointCut" expression="execution(* com.zxh.interfaces.mapper..insert(..)))" />
         <!-- <aop:pointcut id="datalogUpdatePointCut" expression="execution(* com.yami.infrastructure.repository.mapper..update*(..)) &amp;&amp; !execution(* com.yami.infrastructure.repository.mapper.ActionMapper.*(..))" /> -->
         <!-- <aop:advisor advice-ref="mapperInterceptor" pointcut-ref="insertPointCut" /> -->

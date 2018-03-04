@@ -9,4 +9,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="categoryChildren" resultType="Map">
 		select * from category where parentId = #{id}
 	</select>
+	<select id="countAll" resultType="Integer">
+	select count(*) from category
+	</select>
+	<select id="selectLikeName" resultType="Category">
+	select * from category where name like "%"#{key}"%"
+	</select>
+	<select id="selectByParentId" resultType="Category">
+	select * from category where parentId = #{parentId}
+	</select>
 </mapper>

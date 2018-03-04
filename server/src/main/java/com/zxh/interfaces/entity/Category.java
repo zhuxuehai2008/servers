@@ -17,7 +17,7 @@ public class Category implements Serializable{
 	@Column(name = "parentId")
 	public Integer parentId;
 	@Column(name = "pic")
-	public String picture;
+	public String pic;
 	public Integer level;
 	@Column(name = "isEnd")
 	public Integer isEnd;
@@ -39,11 +39,11 @@ public class Category implements Serializable{
 	public void setParentId(Integer parentId) {
 		this.parentId = parentId;
 	}
-	public String getPicture() {
-		return picture;
+	public String getPic() {
+		return pic;
 	}
-	public void setPicture(String picture) {
-		this.picture = picture;
+	public void setPic(String pic) {
+		this.pic = pic;
 	}
 	public Integer getLevel() {
 		return level;
@@ -57,9 +57,23 @@ public class Category implements Serializable{
 	public void setIsEnd(Integer isEnd) {
 		this.isEnd = isEnd;
 	}
+	public Boolean check(){
+		if(null==this.id||null==this.parentId||null==this.pic||null==isEnd||this.pic.isEmpty()){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	public Boolean checkNoId(){
+		if(null==this.parentId||null==this.pic||null==isEnd||this.pic.isEmpty()){
+			return false;
+		}else{
+			return true;
+		}
+	}
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", name=" + name + ", parentId=" + parentId + ", picture=" + picture + ", level="
+		return "Category [id=" + id + ", name=" + name + ", parentId=" + parentId + ", pic=" + pic + ", level="
 				+ level + "]";
 	}
 	

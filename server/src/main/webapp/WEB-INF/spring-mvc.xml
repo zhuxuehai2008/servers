@@ -22,7 +22,7 @@
 	<!-- 容器默认的DefaultServletHandler处理 所有静态内容与无RequestMapping处理的URL-->	
 	<mvc:default-servlet-handler/>
 	<!-- 定义无需Controller的url<->view直接映射 -->
-	<mvc:view-controller path="/" view-name="redirect:/index"/>
+	<mvc:view-controller path="/" view-name="redirect:/login"/>
 	<!-- 配置拦截器 -->
 	<mvc:interceptors>    
    		<mvc:interceptor>    
@@ -30,6 +30,7 @@
         	<mvc:mapping path="/**" />
         	<mvc:exclude-mapping path="/login"/>
         	<mvc:exclude-mapping path="/static/**"/>
+        	<mvc:exclude-mapping path="/upload/**"/>
         	<bean id = "interceptor" class= "com.zxh.core.interceptor.AuthorizeInterceptor">
         		<property name="limitDefinition" >
         			<value>

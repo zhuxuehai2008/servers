@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
     <!--header-->
     <header>
-        <h1><img src="<%=path %>/static/images/admin_logo.png" /></h1>
+        <h1><a href="<%=path %>/index"><img src="<%=path %>/static/images/admin_logo.png" /></a></h1>
         <ul class="rt_nav">
            
             <li><a href="<%=path %>/index" class="admin_icon">DeathGhost</a></li>

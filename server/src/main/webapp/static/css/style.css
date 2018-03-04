@@ -1286,3 +1286,19 @@ header .rt_nav li .quit_icon:before {
 	width: 87px;
     height: 43px;
 }
+.pageButton {
+   float: left;
+   border: #ddd 1px solid;
+   cursor: pointer;
+   padding: 4px 15px;
+   border-right: none;
+}
+div#page {
+    float: right;
+    margin-top: 20px;
+}
+wlht_styles.css:359
+.pagestir {
+    float: right;
+    margin-right: 50px;
+}

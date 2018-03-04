@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <% String path = request.getContextPath();%>
 <html>
@@ -27,6 +28,7 @@ ul .ztree{
 <script src="<%=path %>/static/js/jquery-1.9.1.min.js"></script>
 <script src="<%=path %>/static/js/jquery.mCustomScrollbar.concat.min.js"></script>
 <script type="text/javascript" src="<%=path%>/static/js/ztree/js/jquery.ztree.all.js"></script>	
+<script type="text/javascript" src="<%=path%>/static/js/component/ztree.js"></script>	
 <script>
 
 	(function($){
@@ -63,47 +65,50 @@ ul .ztree{
  <div class="rt_content">
       <div class="page_title">
        <h2 class="fl">分类详情</h2>
-       <a class="fr top_rt_btn">返回分类列表</a>
+       <a href="<%=path %>/commodity/categoryList" class="fr top_rt_btn">返回分类列表</a>
       </div>
      <section>
          <p>分类就是首页 - 页面内部（非底部导航）显示的导航栏内的内容</p>
       <ul class="ulColumn2 flex-column" id="form">
        <li>
-	        <input id = "parentId" name="parentId" type="hidden" value="0">
+       		<c:if test="${null!=one}">
+		        <input id = "id" name="id" type="hidden" value="${one.id}">
+       		</c:if>
+	        <input id = "parentId" name="parentId" type="hidden" value="${null!=one?one.parentId:0}">
 	        <span class="item_name" style="width:120px;">所属分类：</span>
-	        <input type="text" readonly name="parentName" id="parentName" class="textbox textbox_295" value="分类"/>
+	        <label onclick="$.showTree()">
+	        <input type="text" readonly name="parentName" id="parentName" class="textbox textbox_295" value="${null!=parent?parent.name:'分类'}"/>
+			<input readonly class="link_btn" type="button" value="选择类别" >
+			</label>
 			<div tabindex="0" id="treeContent" class="treeContent" style="display:none; position:fixed;z-index:1000;" >
 			   <ul id="treeDemo" class="ztree" style="margin-top:0; width:170px; height: 200px;"></ul>
 			</div>
-			<input readonly class="link_btn" type="button" value="选择类别" onclick="showMenu()">
         	<span class="errorTips" >注意所选大类，以保证添加分类正确    </span>
        </li>
        <li>
         <span class="item_name" style="width:120px;">分类名称：</span>
-        <input type="text" name="name" class="textbox textbox_295" placeholder="商品名称..."/>
+        <input type="text" name="name" class="textbox textbox_295" placeholder="分类名称..." value="${null!=one?one.name:null}"/>
         <span class="errorTips">不要超过4字</span>
        </li>
        
        <li>
         <span class="item_name" style="width:120px;">是否是末端节点：</span>
-        <input type="checkbox" name="isEnd" >
+        <input type="checkbox" name="isEnd">
        </li>
        <li>
        <form action="<%=path %>/servlet/imageUpload" method = "post" id="uploadFile" enctype="multipart/form-data">
         <span class="item_name" style="width:120px;">上传图片：</span>
         <label class="uploadImg">
          <input type="file" name="file"  onchange="uploadPic()"/>
-         <!-- onchange="uploadPic()" -->
          <span>上传图片</span>
         </label>
         </form>
-         <input type="submit" value="sk">
        </li>
        <li>
         <span class="item_name" style="width:120px;">已上传：</span>
         <label class="uploadImg">
-        	<input type="hidden" name="picture" id="picture">
-       		<img src="" id="showImage">
+        	<input type="hidden" name="pic" id="pic" value="${null!=one?one.pic:null}">
+       		<img src="<%=path %>${null!=one?one.pic:null}" id="showImage">
         </label>
        </li>
        <li>
@@ -114,6 +119,17 @@ ul .ztree{
      </section>
  </div>
 </section>
+<c:if test="${null!=one}">
+<script>
+$("#form input[name=isEnd]").prop("checked" ,${null!=one?(one.isEnd==1?true:false):false});
+var oneId = ${null!=parent?parent.id:0};
+</script>
+</c:if>
+<c:if test="${null==one}">
+<script>
+var oneId = null;
+</script>
+</c:if>
 <script>
 function uploadPic() { 
 	  var form = document.getElementById('uploadFile'), 
@@ -130,7 +146,7 @@ function uploadPic() {
 	     alert("上传成功！"); 
 	    } 
 	    $('#showImage').attr("src","<%=path%>"+res);
-	    $("#picture").val(res);
+	    $("#pic").val(res);
 	    console.log(res); 
 	   }, 
 	   error:function(err){ 
@@ -143,7 +159,7 @@ function submit(){
 	 id:$("#form input[name=id]").val(),
 	 name:$("#form input[name=name]").val(),
 	 parentId:$("#form input[name=parentId]").val(),
-	 picture : $("#form input[name=picture]").val(),
+	 pic : $("#form input[name=pic]").val(),
 	 isEnd : $("#form input[name=isEnd]").is(":checked")?1:0
 	};
 	 $.ajax({ 
@@ -164,34 +180,13 @@ function submit(){
 	}) 
 }
 var zNodes =[{name:"分类", id:"0",pid:"-1",isParent:true,nocheck:false}];
-
-var setting = {
-		async: {
-			enable: true,
-			url:"<%=path%>/commodity/categoryChildren",
-			autoParam:["id", "name=n", "level=lv"],
-			dataFilter: filter
-		},
-		view: {
-			selectedMulti: false,
-			dblClickExpand: false
-		},
-		check: {
-			enable: true,
-			chkStyle: "radio",
-			radioType: "all"
-		},
-		data: {
-			simpleData: {
-				enable: true
-			}
-		},
-		callback: {
-			onCheck: onCheck
-		}
-	};
-
-	function filter(treeId, parentNode, childNodes) {
+var setting = {async: {url:"<%=path%>/commodity/categoryChildren",
+					   //dataFilter: filter
+					  },
+			   callback: {onCheck: onCheck
+			              }
+			  };
+ <%--	function filter(treeId, parentNode, childNodes) {
 		if(childNodes.status!=200){return null}
 		childNodes = childNodes.result;
 		if (!childNodes) return null;
@@ -203,39 +198,27 @@ var setting = {
 				childNodes[i].isParent=false;
 				childNodes[i].chkDisabled=true;
 			}
+			if(childNodes[i].id==oneId){
+				childNodes[i].checked=true;
+			}
 		}
 		return childNodes;
-	}
-	function showMenu() {
-		var cityObj = $("#parentName");
-		var cityOffset = $("#parentName").offset();
-		$("#treeContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
-		$("body").bind("mousedown", onBodyDown);
-	}
-	function hideMenu(dom,a){
-		$("#treeContent").fadeOut("fast");
-	}
-	function onBodyDown(event) {
-			if (!(event.target.id == "menuBtn" || event.target.id == "parentName" || event.target.id == "treeContent" || $(event.target).parents("#treeContent").length>0)) {
-				hideMenu();
-			}
-	}
+	}--%>
 	function onCheck(e, treeId, treeNode) {
 		var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
 		nodes = zTree.getCheckedNodes(true),
-		v = "";
-	     m = "";
+		v = "";m = "";
 		for (var i=0, l=nodes.length; i<l; i++) {
-			
 			v = nodes[i].name ;
 			m = nodes[i].id ;
 		}
+		oneId=m;
 		$("#parentName").attr("value", v);
 		$("#parentId").val(m);
-	}
+	} 
  	$(document).ready(function(){
-		$.fn.zTree.init($("#treeDemo"), setting,zNodes);
-	});
+		$.tree("#treeDemo", zNodes,setting);
+	})
 </script>
 <%-- <script src="<%=path %>/static/js/ueditor.config.js"></script>
 <script src="<%=path %>/static/js/ueditor.all.min.js"> </script> --%>
