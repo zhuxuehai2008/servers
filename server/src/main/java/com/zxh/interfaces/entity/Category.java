@@ -58,14 +58,14 @@ public class Category implements Serializable{
 		this.isEnd = isEnd;
 	}
 	public Boolean check(){
-		if(null==this.id||null==this.parentId||null==this.pic||null==isEnd||this.pic.isEmpty()){
+		if(null==this.id||null==this.parentId||null==this.name||null==this.pic||null==isEnd||this.pic.isEmpty()||this.name.isEmpty()){
 			return false;
 		}else{
 			return true;
 		}
 	}
 	public Boolean checkNoId(){
-		if(null==this.parentId||null==this.pic||null==isEnd||this.pic.isEmpty()){
+		if(null==this.parentId||null==this.name||null==this.pic||null==isEnd||this.pic.isEmpty()||this.name.isEmpty()){
 			return false;
 		}else{
 			return true;

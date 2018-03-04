@@ -26,12 +26,14 @@ public class BrandService extends BaseService<Brand,Integer>{
 	public List<Brand> selectLike(String key){
 		return brandMapper.selectLikeName(key);
 	}
-	public int save(Brand one){
+	public int save(Brand one) throws GlobalException{
 		int result =0;
 		if(null==one.getId()){
-			brandMapper.insert(one);
+			if(!one.checkNoId()){ throw  new GlobalException("提交数据不完整！！");}
+			result = brandMapper.insert(one);
 		}else{
-			brandMapper.updateByPrimaryKey(one);
+			if(!one.check()){ throw  new GlobalException("提交数据不完整！！");}
+			result = brandMapper.updateByPrimaryKey(one);
 		}
 		return result;
 	}

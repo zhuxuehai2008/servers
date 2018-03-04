@@ -131,9 +131,7 @@ public class CommodityController {
 		String id = request.getParameter("id");
 		if(null!=id){
 			Brand one = brandService.selectOne(Integer.valueOf(id));
-			//Category parent = categoryService.selectOne(one.parentId);
 			model.addAttribute("one", one);
-			//model.addAttribute("parent", parent);
 		}
 		return "commodity/brandForm";
 	}
@@ -146,6 +144,22 @@ public class CommodityController {
 		}else{
 			return new ResponseObj(Constant.StatusFailOperate);
 		}
+	}
+	/**
+	 * 商品
+	 */
+	@RequestMapping(value = "/commodityList", method = RequestMethod.GET)
+	public String commodityList(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		return "commodity/commodityList";
+	}
+	@RequestMapping(value = "/commodityForm", method = RequestMethod.GET)
+	public String commodityForm(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		String id = request.getParameter("id");
+		if(null!=id){
+			//Brand one = brandService.selectOne(Integer.valueOf(id));
+			//model.addAttribute("one", one);
+		}
+		return "commodity/commodityForm";
 	}
 	@Autowired private CategoryService categoryService ;
 	@Autowired private BrandService brandService;

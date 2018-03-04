@@ -33,6 +33,20 @@ public class Brand implements Serializable{
 	public void setPic(String pic) {
 		this.pic = pic;
 	}
+	public boolean check(){
+		if(null==this.id||null==this.pic||null==this.name||this.pic.isEmpty()||this.name.isEmpty()){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	public boolean checkNoId(){
+		if(null==this.pic||null==this.name||this.pic.isEmpty()||this.name.isEmpty()){
+			return false;
+		}else{
+			return true;
+		}
+	}
 	@Override
 	public String toString() {
 		return "Brand [id=" + id + ", name=" + name + ", pic=" + pic + "]";
