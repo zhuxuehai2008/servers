@@ -37,6 +37,7 @@
 				<value>classpath:mapper/*.xml</value>
 			</list>
 		</property>
+		<property name="configLocation" value="classpath:mybatis.cfg.xml"></property> 
 	</bean>
 	<!-- mapper的接口和mapper的映射文件在同一个包下，并且
 		mapper的接口名称和mapper的映射文件名相同

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.zxh.core.exception.GlobalException;
 import com.zxh.interfaces.entity.Category;
 import com.zxh.interfaces.mapper.CategoryMapper;
@@ -55,6 +57,11 @@ public class CategoryService extends BaseService<Category,Integer>{
 		if(list.size()>0){throw  new GlobalException("存在子节点，不能删除！！");}
 		result = categoryMapper.deleteByPrimaryKey(id);
 		return result;
+	}
+	public List<Category> selectPageHelper(Integer pageBegin, Integer pageSize){
+		PageHelper.startPage(pageBegin, pageSize,true);
+		 List<Category> selectTest = categoryMapper.selectAll();
+		 return selectTest;
 	}
 	@Autowired CategoryMapper categoryMapper;
 }
