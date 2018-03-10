@@ -217,7 +217,7 @@ var setting = {async: {url:"<%=path%>/commodity/categoryChildren",
 		$("#parentId").val(m);
 	} 
  	$(document).ready(function(){
-		$.tree("#treeDemo", zNodes,setting);
+		$.tree("#treeDemo", zNodes,null,setting);
 	})
 </script>
 <%-- <script src="<%=path %>/static/js/ueditor.config.js"></script>

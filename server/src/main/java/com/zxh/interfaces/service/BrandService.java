@@ -16,6 +16,9 @@ public class BrandService extends BaseService<Brand,Integer>{
 	public Brand selectOne(Integer id){
 		return brandMapper.selectByPrimaryKey(id);
 	}
+	public List<Brand> selectAll(){
+		return brandMapper.selectAll();
+	}
 	public List<Brand> selectPage(Integer pageBegin, Integer pageSize){
 		return brandMapper.selectPage(pageBegin, pageSize);
 	}

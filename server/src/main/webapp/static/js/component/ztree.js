@@ -1,6 +1,6 @@
 (function($){
 $.extend({
-    "tree": function (id,zNodes,options) {
+    "tree": function (id,zNodes,opt,options) {
 	    	var option = defaults;
 	    	if(options!=undefined||options!=null){
 		    	option.async = $.extend(defaults.async,options.async||{});
@@ -9,9 +9,11 @@ $.extend({
 		    	option.check = $.extend(defaults.check,options.check||{});
 		    	option.data = $.extend(defaults.data,options.data||{});
 	    	}
+	    	currentTreeContent = $.extend(TreeContent,opt||{});
 		    $.fn.zTree.init($(id), option,zNodes);
     	},	
-    	showTree:showMenu
+    showTree:showMenu,
+    hideTree:hideMenu
 });
 var defaults = {
 		async: {
@@ -38,7 +40,8 @@ var defaults = {
 			onCheck: onCheck
 		}
 	};
-
+var TreeContent ={treeContentId:"treeContent",treeId:"treeDemo",viewNameId:"parentName",formDataId:"parentId"}; 
+var currentTreeContent = {};
 	function filter(treeId, parentNode, childNodes) {
 		if(childNodes.status!=200){return null}
 		childNodes = childNodes.result;
@@ -57,22 +60,23 @@ var defaults = {
 		}
 		return childNodes;
 	}
-	function showMenu() {
-		var cityObj = $("#parentName");
-		var cityOffset = $("#parentName").offset();
-		$("#treeContent").css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
+	function showMenu(opt) {
+		
+		var cityObj = $("#"+currentTreeContent.viewNameId);
+		var cityOffset = $("#"+currentTreeContent.viewNameId).offset();
+		$("#"+currentTreeContent.treeContentId).css({left:cityOffset.left + "px", top:cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
 		$("body").bind("mousedown", onBodyDown);
 	}
-	function hideMenu(dom,a){
-		$("#treeContent").fadeOut("fast");
+	function hideMenu(){
+		$("#"+currentTreeContent.treeContentId).fadeOut("fast");
 	}
 	function onBodyDown(event) {
-			if (!(event.target.id == "menuBtn" || event.target.id == "parentName" || event.target.id == "treeContent" || $(event.target).parents("#treeContent").length>0)) {
-				hideMenu();
+			if (!(event.target.id == "menuBtn" || event.target.id == currentTreeContent.viewNameId || event.target.id == currentTreeContent.treeContentId || $(event.target).parents("#"+currentTreeContent.treeContentId).length>0)) {
+				$.hideTree();
 			}
 	}
 	function onCheck(e, treeId, treeNode) {
-		var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+		var zTree = $.fn.zTree.getZTreeObj(currentTreeContent.treeId),
 		nodes = zTree.getCheckedNodes(true),
 		v = "";
 	     m = "";
@@ -82,7 +86,7 @@ var defaults = {
 			m = nodes[i].id ;
 		}
 		oneId=m;
-		$("#parentName").attr("value", v);
-		$("#parentId").val(m);
+		$("#"+currentTreeContent.viewNameId).attr("value", v);
+		$("#"+currentTreeContent.formDataId).val(m);
 	}
 })(jQuery)

@@ -1287,10 +1287,13 @@ header .rt_nav li .quit_icon:before {
     height: 43px;
 }
 .pageButton {
+   background: #19a97b;
+   border: 1px #139667 solid;
+   color: white;
+   margin-left: 5px;
    float: left;
-   border: #ddd 1px solid;
    cursor: pointer;
-   padding: 4px 15px;
+   padding: 4px 10px;
    border-right: none;
 }
 div#page {

@@ -11,8 +11,10 @@ import tk.mybatis.mapper.common.Mapper;
 
 public interface CategoryMapper extends Mapper<Category>{
 	public List<Category> selectPage(@Param("pageBegin")Integer pageBegin,@Param("pageSize")Integer pageSize);
+	public List<Category> selectPageSearch(@Param("pageBegin")Integer pageBegin,@Param("pageSize")Integer pageSize,@Param("key")String key);
 	public List<HashMap<String,String>> categoryChildren(@Param("id")Integer id);
 	public Integer countAll();
+	public Integer countSearch(@Param("key") String key);
 	public List<Category> selectLikeName(@Param("key") String key);
 	public List<Category> selectByParentId(@Param("parentId") Integer parentId);
 }

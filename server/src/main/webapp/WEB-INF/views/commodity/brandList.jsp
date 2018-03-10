@@ -104,7 +104,7 @@
             </div>
             <section class="mtb">
                 <span>关键字</span>
-				<input type="text" id="searchKey"placeholder="查询关键字">
+				<input type="text" id="searchKey" class="textbox textbox_225" placeholder="查询关键字">
                 <input type="button" value="查询" class="group_btn" onclick="search()"/>
             </section>
             <table class="table">

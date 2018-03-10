@@ -39,7 +39,9 @@
     </script>
     <script>
     var pageSetting= {
-    	url:"<%=path%>/commodity/categoryPage",
+    	url:"<%=path%>/commodity/categoryPageSearch",
+    	data:{key:""},
+    	name:"pageSetting",
     	success:function(data){
     		console.log(data);	
 			var l = data.list;
@@ -52,7 +54,9 @@
 	    	}
     }
     function search(){
-	   	 $.ajax({ 
+    	pageSetting.data.key = $("#searchKey").val();
+    	$.page(0,pageSetting);
+	   	 <%-- $.ajax({ 
 			   url:"<%=path %>/commodity/categorySearch", 
 			   type:"post", 
 			   data:{key:$("#searchKey").val()}, 
@@ -68,7 +72,7 @@
 			   error:function(err){ 
 			    alert("网络连接失败,稍后重试",err); 
 			   } 
-		})
+		}) --%>
     }
     function del(id){
 	   	 $.ajax({ 
@@ -104,7 +108,7 @@
             </div>
             <section class="mtb">
                 <span>关键字</span>
-				<input type="text" id="searchKey"placeholder="查询关键字">
+				<input type="text" id="searchKey" class="textbox textbox_225" placeholder="查询关键字">
                 <input type="button" value="查询" class="group_btn" onclick="search()"/>
             </section>
             <table class="table">
@@ -133,7 +137,7 @@
             <div id ="page" class="pagestir"></div>
         </div>
     </section>
-    <style>
+<!--     <style>
     	.pageButton {
 		    float: left;
 		    border: #ddd 1px solid;
@@ -150,7 +154,7 @@
 		    float: right;
 		    margin-right: 50px;
 		}
-		    </style>
+		    </style> -->
     <%-- <script src="<%=path %>/static/js/ueditor.config.js"></script>
     <script src="<%=path %>/static/js/ueditor.all.min.js">
     </script> --%>

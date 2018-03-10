@@ -38,12 +38,18 @@ public class CategoryService extends BaseService<Category,Integer>{
 	public List<Category> selectPage(Integer pageBegin, Integer pageSize){
 		return categoryMapper.selectPage(pageBegin, pageSize);
 	}
+	public List<Category> selectPageSearch(Integer pageBegin, Integer pageSize,String key){
+		return categoryMapper.selectPageSearch(pageBegin, pageSize, key);
+	}
 	
 	public List<HashMap<String, String>> categoryChildren(Integer id){
 		return categoryMapper.categoryChildren(id);
 	}
 	public Integer countAll(){
 		return categoryMapper.countAll();
+	}
+	public Integer countSearch(String key){
+		return categoryMapper.countSearch(key);
 	}
 	public List<Category> selectLike(String key){
 		return categoryMapper.selectLikeName(key);

@@ -6,8 +6,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectPage" resultType="Commodity">
 		select * from commodity limit #{pageBegin} , #{pageSize}
 	</select>
+	<select id="selectPageSearch" resultType="Commodity">
+		select * from commodity where name like "%"#{key}"%" limit #{pageBegin} , #{pageSize}
+	</select>
 	<select id="countAll" resultType="Integer">
 	select count(*) from commodity
+	</select>
+	<select id="countSearch" resultType="Integer">
+	select count(*) from commodity where name like "%"#{key}"%" 
 	</select>
 	<select id="selectLikeName" resultType="Commodity">
 	select * from commodity where name like "%"#{key}"%"
