@@ -119,5 +119,11 @@
 	    <version>2.4</version>
 	    <classifier>jdk15</classifier>
 	</dependency>
+		<!-- https://mvnrepository.com/artifact/com.hankcs/hanlp -->
+	<dependency>
+	    <groupId>com.hankcs</groupId>
+	    <artifactId>hanlp</artifactId>
+	    <version>portable-1.6.2</version>
+	</dependency>
   </dependencies>
 </project>
